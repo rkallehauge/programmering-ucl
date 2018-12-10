@@ -20,11 +20,18 @@ $('#options').on('click', () => {
 $('.modal input').on('click', (e) => {
     var type = e.target.name;
     var value = e.target.value;
+    console.log(value);
     myGame.settings.change(type, value);
 });
 
 $('.jscolor').on('change', (e) => {
-    myGame.settings.change('snakeColor', e.target.style.backgroundColor);
+    if(e.target.name === "foodColor"){
+        myGame.settings.change('foodColor', e.target.style.backgroundColor);
+        console.log("Changed food color");
+    } else if(e.target.name === "snakeColor"){
+        myGame.settings.change('snakeColor', e.target.style.backgroundColor);
+        console.log("Changed snake color");
+    }
 });
 
 function changeDifficulty(value){   

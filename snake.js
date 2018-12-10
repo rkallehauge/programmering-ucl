@@ -45,16 +45,42 @@ function Game(blockSize, renderer){
     this.settings = {
         solidBorders: false, 
         snakeColor : "#fff",   
-        randomFoodColor : true, 
+        foodColor : "#f00",
+        randomSnakeColor : false,
+        randomFoodColor : false, 
         change: (type, value) => {
-            if(type==='snakeColor'){
-                if(value.includes('rgb')){
-                    this.player.color = value;
-                } else{
-                    this.player.color = "#" + value;
-                }
+            console.log(type, value);
+            switch(type){
+
+                 case 'snakeColor':
+                    if(value.includes('rgb')){
+                        this.player.color = value;
+                    } else{
+                        this.player.color = "#" + value;
+                    }
+                break;
+                
+                case 'foodColor':
+                    if(value.includes('rgb')){
+                        this.settings.foodColor = value;
+                    } else{
+                        this.settings.foodColor = "#" + value;
+                    }
+                break; 
+
+                case 'randomSnakeColor': 
+                    if(value === 'on'){
+                        this.player.color = randomColor();
+                    } else{
+                        this.player.color = this.settings.snakeColor;
+                    }
+                break;
+
+
+                default:
+                    this.settings[type] = value;
+                break;
             }
-            this.settings[type] = value;
         }
     };
 
@@ -88,7 +114,7 @@ function Game(blockSize, renderer){
     this.spawnFood = () => {
         console.log('Spawning food');
         var coords = this.randomCoordinates();
-        var color = "#f00";
+        var color = this.settings.foodColor;
         if(this.settings.randomFoodColor){
             color = this.randomColor();
         }
